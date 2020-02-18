@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
         TIME
     }
 
-    public enum Stage {
+    [System.Serializable] public enum Stage {
         PIAZZA,
         LAWN,
         LIBRARY,
@@ -29,14 +29,27 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance;
     public Gamemode gamemode;
     public Stage stage;
+    public GameObject stageCanvas;
+    public GameObject gamemodeCanvas;
 
     // Use this for initialization
     void Start() {
-        if(Instance != null) {
-            Destroy(this);
-        }
         Instance = this;
         DontDestroyOnLoad(this);
+    }
+
+    public void SetStage(string stage) {
+        if(stage.Equals("PIAZZA")) {
+            this.stage = Stage.PIAZZA;
+        } else if(stage.Equals("LAWN")) {
+            this.stage = Stage.LAWN;
+        } else if(stage.Equals("LIBRARY")) {
+            this.stage = Stage.LIBRARY;
+        } else {
+            this.stage = Stage.NONE;
+        }
+        stageCanvas.SetActive(false);
+        gamemodeCanvas.SetActive(true);
     }
 
     public void SetGamemode(string gamemode) {
