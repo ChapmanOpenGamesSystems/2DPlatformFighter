@@ -14,6 +14,13 @@ public class GameManager : MonoBehaviour {
         TIME
     }
 
+    public enum Stage {
+        PIAZZA,
+        LAWN,
+        LIBRARY,
+        NONE
+    }
+
     public Transform spawnpoint;
     //Separate prefabs because different control bindings/player specific details
     public GameObject player1Prefab;
@@ -21,23 +28,33 @@ public class GameManager : MonoBehaviour {
     public GameObject[] players; //Array of all player GameObjects in Scene
     public static GameManager Instance;
     public Gamemode gamemode;
+    public Stage stage;
 
     // Use this for initialization
     void Start() {
+        if(Instance != null) {
+            Destroy(this);
+        }
         Instance = this;
         DontDestroyOnLoad(this);
     }
 
-    // Update is called once per frame
-    void Update() {
-
-    }
-
-    public void SetGamemode(string gamemode)
-    {
+    public void SetGamemode(string gamemode) {
         //Using string parameter instead of Gamemode parameter because Unity doesn't seem to support enum parameters on button clicks
-        SceneManager.LoadScene(1);
-        Debug.Log(gamemode);
+        switch (stage) {
+            case Stage.PIAZZA:
+                SceneManager.LoadScene("Piazza");
+                break;
+            case Stage.LAWN:
+                SceneManager.LoadScene("Lawn");
+                break;
+            case Stage.LIBRARY:
+                SceneManager.LoadScene("Library");
+                break;
+            case Stage.NONE:
+                SceneManager.LoadScene("Sandbox");
+                break;
+        }
         StartCoroutine(InitializeGame(gamemode));
     }
 
