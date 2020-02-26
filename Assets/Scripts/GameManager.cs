@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour {
                 SceneManager.LoadScene("Library");
                 break;
             case Stage.NONE:
-                SceneManager.LoadScene("Sandbox");
+                SceneManager.LoadScene("Custom");
                 break;
         }
         StartCoroutine(InitializeGame(gamemode));

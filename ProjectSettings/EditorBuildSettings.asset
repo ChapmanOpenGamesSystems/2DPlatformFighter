@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/GameMode Selection.unity
     guid: 9cdc1253ddf36f4439bc3ff78c92c235
   - enabled: 1
-    path: Assets/Scenes/Sandbox.unity
+    path: Assets/Scenes/Custom.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Lawn.unity
+    guid: 3b8b990e4f4829f43af7a900fa715036
+  - enabled: 1
+    path: Assets/Scenes/Library.unity
+    guid: 322367f1a4ed5bd479ecf631ebf3d8c7
+  - enabled: 1
+    path: Assets/Scenes/Piazza.unity
+    guid: 9f9f28762c26ef14c832b5a94238fa28
   m_configObjects: {}
