@@ -87,16 +87,16 @@ public class PlayerAttack : MonoBehaviour {
 
             if(grabbedPlayer != null)
             {
-                if (Input.GetButtonDown("Vertical"))
+                if (Input.GetButtonDown("Vertical" + playerNum))
                 {
-                    if (Input.GetAxisRaw("Vertical") > 0)
+                    if (Input.GetAxisRaw("Vertical" + playerNum) > 0)
                     {
                         Debug.Log("Up Throw");
                         anim.SetTrigger("UThrow");
                         grabbedPlayer.GetComponent<Player>().PlayerStagger(UpThrow);
                         StartCoroutine(ReleasePlayer(grabbedPlayer));
                     }
-                    else if (Input.GetAxisRaw("Vertical") < 0)
+                    else if (Input.GetAxisRaw("Vertical" + playerNum) < 0)
                     {
                         Debug.Log("Down Throw");
                         anim.SetTrigger("DThrow");
@@ -104,10 +104,10 @@ public class PlayerAttack : MonoBehaviour {
                         StartCoroutine(ReleasePlayer(grabbedPlayer));
                     }
                 }
-                if (Input.GetButtonDown("Horizontal"))
+                if (Input.GetButtonDown("Horizontal" + playerNum))
                 {
                     Attack tempThrow = new Attack(); //Using tempThrow as deep copy to change knockback direction without affecting original
-                    if (Input.GetAxisRaw("Horizontal") > 0 && p.facingRight || Input.GetAxisRaw("Horizontal") < 0 && !p.facingRight)
+                    if (Input.GetAxisRaw("Horizontal" + playerNum) > 0 && p.facingRight || Input.GetAxisRaw("Horizontal" + playerNum) < 0 && !p.facingRight)
                     {
                         Debug.Log("Forward Throw");
                         anim.SetTrigger("FThrow");
@@ -119,7 +119,7 @@ public class PlayerAttack : MonoBehaviour {
                         grabbedPlayer.GetComponent<Player>().PlayerStagger(tempThrow);
                         StartCoroutine(ReleasePlayer(grabbedPlayer));
                     }
-                    else if (Input.GetAxisRaw("Horizontal") < 0 && p.facingRight || Input.GetAxisRaw("Horizontal") > 0 && !p.facingRight)
+                    else if (Input.GetAxisRaw("Horizontal" + playerNum) < 0 && p.facingRight || Input.GetAxisRaw("Horizontal" + playerNum) > 0 && !p.facingRight)
                     {
                         Debug.Log("Back Throw");
                         anim.SetTrigger("BThrow");
@@ -138,7 +138,7 @@ public class PlayerAttack : MonoBehaviour {
             
         }
 
-        if (Input.GetButtonDown("Attack")) //As long as they aren't in an animation, pressing attack will launch an attack
+        if (Input.GetButtonDown("Attack" + playerNum)) //As long as they aren't in an animation, pressing attack will launch an attack
         {
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("Movement") && p.isGrounded)
             {
@@ -151,12 +151,12 @@ public class PlayerAttack : MonoBehaviour {
             }
         }
         //You can't make multiple inputs at once, so else-if suite is optimal
-        else if (Input.GetButtonDown("Special") && (anim.GetCurrentAnimatorStateInfo(0).IsName("Movement") || anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"))) //As long as they aren't in an animation other than jump, pressing attack will launch an attack
+        else if (Input.GetButtonDown("Special" + playerNum) && (anim.GetCurrentAnimatorStateInfo(0).IsName("Movement") || anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"))) //As long as they aren't in an animation other than jump, pressing attack will launch an attack
         {
             SpecialAttack();
         }
 
-        else if (Input.GetButtonDown("Grab") && anim.GetCurrentAnimatorStateInfo(0).IsName("Movement") && p.isGrounded)
+        else if (Input.GetButtonDown("Grab" + playerNum) && anim.GetCurrentAnimatorStateInfo(0).IsName("Movement") && p.isGrounded)
         {
             StartCoroutine(GrabPlayer());            
         }
@@ -189,17 +189,17 @@ public class PlayerAttack : MonoBehaviour {
     void GroundedAttack()
     {
         //Btilt isn't a thing, can only be executed by turning around and ftilting.
-        if (Input.GetAxisRaw("Horizontal") < 0 && !p.facingRight || Input.GetAxisRaw("Horizontal") > 0 && p.facingRight) //Ftilt
+        if (Input.GetAxisRaw("Horizontal" + playerNum) < 0 && !p.facingRight || Input.GetAxisRaw("Horizontal" + playerNum) > 0 && p.facingRight) //Ftilt
         {
             anim.SetTrigger("Ftilt");
             StartCoroutine(AttackCalled(Ftilt));
         }
-        else if (Input.GetAxisRaw("Vertical") > 0) //Utilt
+        else if (Input.GetAxisRaw("Vertical" + playerNum) > 0) //Utilt
         {
             anim.SetTrigger("Utilt");
             StartCoroutine(AttackCalled(Utilt));
         }
-        else if (Input.GetAxisRaw("Vertical") < 0) //Dtilt
+        else if (Input.GetAxisRaw("Vertical" + playerNum) < 0) //Dtilt
         {
             anim.SetTrigger("Dtilt");
             StartCoroutine(AttackCalled(Dtilt));
@@ -215,22 +215,22 @@ public class PlayerAttack : MonoBehaviour {
     //Function for aerial attack
     void AerialAttack()
     {
-        if (Input.GetAxisRaw("Horizontal") < 0 && p.facingRight || Input.GetAxisRaw("Horizontal") > 0 && !p.facingRight) //Backair
+        if (Input.GetAxisRaw("Horizontal" + playerNum) < 0 && p.facingRight || Input.GetAxisRaw("Horizontal" + playerNum) > 0 && !p.facingRight) //Backair
         {
             anim.SetTrigger("Bair");
             StartCoroutine(AttackCalled(Bair));
         }
-        else if (Input.GetAxisRaw("Horizontal") < 0 && !p.facingRight || Input.GetAxisRaw("Horizontal") > 0 && p.facingRight) //Fair
+        else if (Input.GetAxisRaw("Horizontal" + playerNum) < 0 && !p.facingRight || Input.GetAxisRaw("Horizontal" + playerNum) > 0 && p.facingRight) //Fair
         {
             anim.SetTrigger("Fair");
             StartCoroutine(AttackCalled(Fair));
         }
-        else if (Input.GetAxisRaw("Vertical") > 0) //Up air
+        else if (Input.GetAxisRaw("Vertical" + playerNum) > 0) //Up air
         {
             anim.SetTrigger("Uair");
             StartCoroutine(AttackCalled(Uair));
         }
-        else if (Input.GetAxisRaw("Vertical") < 0) //Dair
+        else if (Input.GetAxisRaw("Vertical" + playerNum) < 0) //Dair
         {
             anim.SetTrigger("Dair");
             StartCoroutine(AttackCalled(Dair));
@@ -246,7 +246,7 @@ public class PlayerAttack : MonoBehaviour {
     void SpecialAttack()
     {
         //Need backwards side special for when you're moving in the air and using a side special (It needs to flip you)
-        if (Input.GetAxisRaw("Horizontal") < 0 && p.facingRight || Input.GetAxisRaw("Horizontal") > 0 && !p.facingRight) //Side Special (Backwards)
+        if (Input.GetAxisRaw("Horizontal" + playerNum) < 0 && p.facingRight || Input.GetAxisRaw("Horizontal" + playerNum) > 0 && !p.facingRight) //Side Special (Backwards)
         {
             pmove.PlayerFlip(); //Need to flip them if they're facing backwards
             //Aerial Special
@@ -254,7 +254,7 @@ public class PlayerAttack : MonoBehaviour {
             StartCoroutine(SpawnProjectile(FASpecial, FASpecialDirection)); //Flipped FASpecial direction
             //Can't possibly be grounded
         }
-        else if (Input.GetAxisRaw("Horizontal") < 0 && !p.facingRight || Input.GetAxisRaw("Horizontal") > 0 && p.facingRight) //Side Special (Forwards)
+        else if (Input.GetAxisRaw("Horizontal" + playerNum) < 0 && !p.facingRight || Input.GetAxisRaw("Horizontal" + playerNum) > 0 && p.facingRight) //Side Special (Forwards)
         {
 
             if (!p.isGrounded)
@@ -271,7 +271,7 @@ public class PlayerAttack : MonoBehaviour {
             }
 
         }
-        else if (Input.GetAxisRaw("Vertical") > 0) //Up Special
+        else if (Input.GetAxisRaw("Vertical" + playerNum) > 0) //Up Special
         {
 
             if (!p.isGrounded)
@@ -288,7 +288,7 @@ public class PlayerAttack : MonoBehaviour {
             }
 
         }
-        else if (Input.GetAxisRaw("Vertical") < 0) //Down Special
+        else if (Input.GetAxisRaw("Vertical" + playerNum) < 0) //Down Special
         {
 
             if (!p.isGrounded)

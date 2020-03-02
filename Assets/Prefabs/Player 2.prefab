@@ -947,7 +947,7 @@ MonoBehaviour:
   projectileSpeed: 20
   projectileKnockback: 500
   projectileDamage: 5
-  playerNum: 1
+  playerNum: 2
 --- !u!114 &114443840638582204
 MonoBehaviour:
   m_ObjectHideFlags: 1
