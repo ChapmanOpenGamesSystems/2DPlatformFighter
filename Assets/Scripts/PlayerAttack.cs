@@ -50,6 +50,7 @@ public class PlayerAttack : MonoBehaviour {
     [SerializeField] private float projectileSpeed = 10f;
     public float projectileKnockback = 500f;
     public int projectileDamage = 5;
+    public int playerNum = 0;
 
     private float grabTime = 0.2f;
 

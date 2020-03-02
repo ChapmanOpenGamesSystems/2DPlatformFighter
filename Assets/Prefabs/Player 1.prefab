@@ -817,7 +817,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bair:
-    hitbox: {fileID: 1940659109430144}
+    hitbox: {fileID: 1298792939446014}
     hitFrame: 0
     attackTime: 0.2
     attackDamage: 5
@@ -825,7 +825,7 @@ MonoBehaviour:
     knockbackDirection: {x: 1, y: 0}
     name: Bair
   Fair:
-    hitbox: {fileID: 1940659109430144}
+    hitbox: {fileID: 1596903478374976}
     hitFrame: 0
     attackTime: 0.2
     attackDamage: 5
@@ -841,7 +841,7 @@ MonoBehaviour:
     knockbackDirection: {x: 1, y: 0}
     name: Uair
   Dair:
-    hitbox: {fileID: 1940659109430144}
+    hitbox: {fileID: 1546135754920592}
     hitFrame: 0
     attackTime: 0.2
     attackDamage: 5
@@ -849,7 +849,7 @@ MonoBehaviour:
     knockbackDirection: {x: 1, y: 0}
     name: Dair
   Nair:
-    hitbox: {fileID: 1940659109430144}
+    hitbox: {fileID: 1222218246035116}
     hitFrame: 0
     attackTime: 0.2
     attackDamage: 5
@@ -873,7 +873,7 @@ MonoBehaviour:
     knockbackDirection: {x: 0, y: 1}
     name: Utilt
   Dtilt:
-    hitbox: {fileID: 1702424861964630}
+    hitbox: {fileID: 1458229779026806}
     hitFrame: 0
     attackTime: 0.2
     attackDamage: 5
@@ -973,6 +973,7 @@ MonoBehaviour:
   projectileSpeed: 20
   projectileKnockback: 500
   projectileDamage: 5
+  playerNum: 1
 --- !u!114 &114616412027267786
 MonoBehaviour:
   m_ObjectHideFlags: 1
