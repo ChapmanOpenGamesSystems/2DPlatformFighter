@@ -355,7 +355,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1545557865880224}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63fdab8c629a02e4a9e2cc0c23d2f1b8, type: 3}
   m_Name: 
@@ -365,6 +365,7 @@ MonoBehaviour:
   jumpForce: 500
   airSpeed: 10
   maxJumps: 2
+  playerNum: 2
 --- !u!212 &212883373181033408
 SpriteRenderer:
   m_ObjectHideFlags: 1

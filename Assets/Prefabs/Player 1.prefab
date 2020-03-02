@@ -989,6 +989,7 @@ MonoBehaviour:
   jumpForce: 500
   airSpeed: 10
   maxJumps: 2
+  playerNum: 1
 --- !u!212 &212131315120043768
 SpriteRenderer:
   m_ObjectHideFlags: 1

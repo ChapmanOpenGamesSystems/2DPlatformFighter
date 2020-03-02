@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private float airSpeed = 10f; //The speed at which the player moves through the air
     public short maxJumps = 2; //The max number of jumps players have
 
+    public int playerNum = 0;
+
     private Player p;
     private Animator anim;
 
@@ -42,32 +44,32 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(Input.GetAxis("Vertical") < 0 && !downDown) {
+        if(Input.GetAxis("Vertical" + playerNum) < 0 && !downDown) {
             downPressed = true;
             downDown = true;
         } else {
             downPressed = false;
         }
 
-        if(Mathf.Abs(Input.GetAxis("Dodge")) > 0.1 && !dodgeDown) {
+        if(Mathf.Abs(Input.GetAxis("Dodge" + playerNum)) > 0.1 && !dodgeDown) {
             dodgePressed = true;
             dodgeDown = true;
         } else {
             dodgePressed = false;
         }
 
-        if(Input.GetAxis("Vertical") == 0) {
+        if(Input.GetAxis("Vertical" + playerNum) == 0) {
             downDown = false;
         }
 
-        if(Mathf.Abs(Input.GetAxis("Dodge")) < 0.1) {
+        if(Mathf.Abs(Input.GetAxis("Dodge" + playerNum)) < 0.1) {
             dodgeDown = false;
         }
 
 
         RaycastHit2D beamToFloor = Physics2D.Raycast(transform.position, -Vector2.up, 1.91f); //1.905 should be distance to ground, but 1.91 allows leniency to avoid bugs (outliers occasionally popped up and prevented flipping)
         //Jump if player has jumps left
-        if (Input.GetButtonDown("Jump") && jumpsLeft > 0)
+        if (Input.GetButtonDown("Jump" + playerNum) && jumpsLeft > 0)
         {
             if(anim.GetCurrentAnimatorStateInfo(0).IsName("Movement") || anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
             {
@@ -104,16 +106,16 @@ public class PlayerMovement : MonoBehaviour {
         //Change player movement based on whether or not player is sprinting/in the air
         if(anim.GetCurrentAnimatorStateInfo(0).IsName("Movement") && p.isGrounded)
         {
-            if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.1)
+            if(Mathf.Abs(Input.GetAxisRaw("Horizontal" + playerNum)) > 0.1)
             {
-                if (Input.GetButton("Sprint"))
+                if (Input.GetButton("Sprint" + playerNum))
                 {
-                    horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+                    horizontalMove = Input.GetAxisRaw("Horizontal" + playerNum) * runSpeed;
                     anim.SetFloat("Move", 1.0f);
                 }
                 else
                 {
-                    horizontalMove = Input.GetAxisRaw("Horizontal") * walkSpeed;
+                    horizontalMove = Input.GetAxisRaw("Horizontal" + playerNum) * walkSpeed;
                     anim.SetFloat("Move", 0.5f);
                 }
             }
@@ -130,11 +132,11 @@ public class PlayerMovement : MonoBehaviour {
         else //If you're not being grabbed or grabbing, you can move
         {
             //TODO: Implement a falling animation
-            horizontalMove = Input.GetAxisRaw("Horizontal") * airSpeed;
+            horizontalMove = Input.GetAxisRaw("Horizontal" + playerNum) * airSpeed;
             //If you're in the air and press down after/at the peak of your jump, you fast fall
             if ((anim.GetCurrentAnimatorStateInfo(0).IsName("Movement") || anim.GetCurrentAnimatorStateInfo(0).IsName("Jump")) && !p.isGrounded)
             {
-                if (downPressed && Input.GetAxisRaw("Vertical") < 0 && rb.velocity.y <= 0 && !isFastFalling)
+                if (downPressed && Input.GetAxisRaw("Vertical" + playerNum) < 0 && rb.velocity.y <= 0 && !isFastFalling)
                 {
                     rb.AddForce(new Vector2(0f, -1 * jumpForce));
                     isFastFalling = true;
@@ -149,7 +151,7 @@ public class PlayerMovement : MonoBehaviour {
         //If the player is on the ground (GROUNDED or IDLE), they can dodge roll/spot dodge
         if(dodgePressed && anim.GetCurrentAnimatorStateInfo(0).IsName("Movement") && p.isGrounded)
         {
-            if(Input.GetAxisRaw("Vertical") < 0)
+            if(Input.GetAxisRaw("Vertical" + playerNum) < 0)
             {
                 StartCoroutine(PlayerSpotDodge());
             }
@@ -244,7 +246,7 @@ public class PlayerMovement : MonoBehaviour {
         p.hitbox.enabled = false; //Disabling boxCollider hitbox
 
         //Apply force based on vertical/Horizontal input after zeroing out velocity
-        if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+        if (Input.GetAxisRaw("Horizontal" + playerNum) == 0 && Input.GetAxisRaw("Vertical" + playerNum) == 0)
         {
             //Neutral Dodge keeps initial velocity
             anim.SetTrigger("Air Dodge");
@@ -254,7 +256,7 @@ public class PlayerMovement : MonoBehaviour {
             anim.SetTrigger("Air Slide");
             rb.velocity = new Vector2(0f, 0f);
         }
-        rb.AddForce(new Vector2(Input.GetAxisRaw("Horizontal") * airDodgeForce, Input.GetAxisRaw("Vertical") * airDodgeForce));
+        rb.AddForce(new Vector2(Input.GetAxisRaw("Horizontal" + playerNum) * airDodgeForce, Input.GetAxisRaw("Vertical" + playerNum) * airDodgeForce));
 
         yield return new WaitForSeconds(airDodgeLength);
         p.hitbox.enabled = true; //Re-enabling boxCollider hitbox
