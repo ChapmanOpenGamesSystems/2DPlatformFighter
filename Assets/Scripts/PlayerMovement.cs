@@ -27,6 +27,11 @@ public class PlayerMovement : MonoBehaviour {
     private float spotDodgeLength = 0.25f; //How long the player is in a spot Dodge
     private bool isFastFalling = false;
 
+    private bool downPressed;
+    private bool dodgePressed;
+    private bool dodgeDown;
+    private bool downDown;
+
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
@@ -37,6 +42,28 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if(Input.GetAxis("Vertical") < 0 && !downDown) {
+            downPressed = true;
+            downDown = true;
+        } else {
+            downPressed = false;
+        }
+
+        if(Mathf.Abs(Input.GetAxis("Dodge")) > 0.1 && !dodgeDown) {
+            dodgePressed = true;
+            dodgeDown = true;
+        } else {
+            dodgePressed = false;
+        }
+
+        if(Input.GetAxis("Vertical") == 0) {
+            downDown = false;
+        }
+
+        if(Mathf.Abs(Input.GetAxis("Dodge")) < 0.1) {
+            dodgeDown = false;
+        }
+
 
         RaycastHit2D beamToFloor = Physics2D.Raycast(transform.position, -Vector2.up, 1.91f); //1.905 should be distance to ground, but 1.91 allows leniency to avoid bugs (outliers occasionally popped up and prevented flipping)
         //Jump if player has jumps left
@@ -107,10 +134,11 @@ public class PlayerMovement : MonoBehaviour {
             //If you're in the air and press down after/at the peak of your jump, you fast fall
             if ((anim.GetCurrentAnimatorStateInfo(0).IsName("Movement") || anim.GetCurrentAnimatorStateInfo(0).IsName("Jump")) && !p.isGrounded)
             {
-                if (Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") < 0 && rb.velocity.y <= 0 && !isFastFalling)
+                if (downPressed && Input.GetAxisRaw("Vertical") < 0 && rb.velocity.y <= 0 && !isFastFalling)
                 {
                     rb.AddForce(new Vector2(0f, -1 * jumpForce));
                     isFastFalling = true;
+                    downPressed = false;
                 }
             }
         }
@@ -119,7 +147,7 @@ public class PlayerMovement : MonoBehaviour {
         //Move player based on their current speed
         PlayerMove(horizontalMove);
         //If the player is on the ground (GROUNDED or IDLE), they can dodge roll/spot dodge
-        if(Input.GetButtonDown("Dodge") && anim.GetCurrentAnimatorStateInfo(0).IsName("Movement") && p.isGrounded)
+        if(dodgePressed && anim.GetCurrentAnimatorStateInfo(0).IsName("Movement") && p.isGrounded)
         {
             if(Input.GetAxisRaw("Vertical") < 0)
             {
@@ -131,7 +159,7 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
         //If they're in the air and try to air dodge, they do unless they already have
-        else if (Input.GetButtonDown("Dodge") && (anim.GetCurrentAnimatorStateInfo(0).IsName("Movement") || anim.GetCurrentAnimatorStateInfo(0).IsName("Jump")) && !p.isGrounded && !hasAirDodged)
+        else if (dodgePressed && (anim.GetCurrentAnimatorStateInfo(0).IsName("Movement") || anim.GetCurrentAnimatorStateInfo(0).IsName("Jump")) && !p.isGrounded && !hasAirDodged)
         {
             StartCoroutine(PlayerAirDodge());
         }
