@@ -273,6 +273,14 @@ public class GameManager : MonoBehaviour {
             player1UI.playerDamageShadow.text = "0";
             player2UI.playerDamage.text = "0";
             player2UI.playerDamageShadow.text = "0";
+
+            //Setting playerUI lives to 1 because time mode doesn't keep track
+            player1UI.life2.SetActive(false);
+            player1UI.life3.SetActive(false);
+            player1UI.life4.SetActive(false);
+            player2UI.life2.SetActive(false);
+            player2UI.life3.SetActive(false);
+            player2UI.life4.SetActive(false);
         }
     }
 
