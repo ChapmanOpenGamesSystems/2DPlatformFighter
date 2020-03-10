@@ -10,13 +10,11 @@ public class PauseMenu : MonoBehaviour
     public bool isPaused;
 
     public GameObject pauseMenu;
-    private GameObject[] players;
 
 	// Use this for initialization
 	void Start ()
     {
         pauseMenu.SetActive(false);
-        players = GameObject.FindGameObjectsWithTag("Player");
 	}
 	
 	// Update is called once per frame
@@ -33,7 +31,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(true);
         isPaused = true;
         
-        foreach (GameObject player in players)
+        foreach (GameObject player in GameManager.Instance.players)
         {
             player.GetComponent<SpriteRenderer>().sortingOrder = 0;
         }
@@ -52,7 +50,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         isPaused = false;
 
-        foreach (GameObject player in players)
+        foreach (GameObject player in GameManager.Instance.players)
         {
             player.GetComponent<SpriteRenderer>().sortingOrder = 1;
         }

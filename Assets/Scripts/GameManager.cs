@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour {
     public GameObject stageCanvas;
     public GameObject gamemodeCanvas;
 
+    public UIManager.PlayerUI player1UI;
+    public UIManager.PlayerUI player2UI;
+
     // Use this for initialization
     void Start() {
         Instance = this;
@@ -87,6 +90,17 @@ public class GameManager : MonoBehaviour {
                 {
                     PlayerRespawn(playerNum, playerToKill.GetComponent<Player>().playerScore);
                 }
+                if(playerNum == 1) { //Simple if/else to account for playerNum being either 1 or 2;
+                    player1UI.life1.SetActive(playerToKill.GetComponent<Player>().playerScore >= 1);
+                    player1UI.life2.SetActive(playerToKill.GetComponent<Player>().playerScore >= 2);
+                    player1UI.life3.SetActive(playerToKill.GetComponent<Player>().playerScore >= 3);
+                    player1UI.life4.SetActive(playerToKill.GetComponent<Player>().playerScore >= 4);
+                } else {
+                    player2UI.life1.SetActive(playerToKill.GetComponent<Player>().playerScore >= 1);
+                    player2UI.life2.SetActive(playerToKill.GetComponent<Player>().playerScore >= 2);
+                    player2UI.life3.SetActive(playerToKill.GetComponent<Player>().playerScore >= 3);
+                    player2UI.life4.SetActive(playerToKill.GetComponent<Player>().playerScore >= 4);
+                }
                 break;
             case Gamemode.TIME:
                 //Going to need some sort of logic to determine whether it was an SD or a kill; possibly attaching "lastHit" as a player number and -1 when not hit, refreshing when on the ground
@@ -115,6 +129,18 @@ public class GameManager : MonoBehaviour {
                 else
                 {
                     PlayerRespawn(playerNum, playerToKill.GetComponent<Player>().playerScore);
+                }
+                if (playerNum == 1) { //Simple if/else to account for playerNum being either 1 or 2;
+                    player1UI.life1.SetActive(playerToKill.GetComponent<Player>().playerScore >= 1);
+                    player1UI.life2.SetActive(playerToKill.GetComponent<Player>().playerScore >= 2);
+                    player1UI.life3.SetActive(playerToKill.GetComponent<Player>().playerScore >= 3);
+                    player1UI.life4.SetActive(playerToKill.GetComponent<Player>().playerScore >= 4);
+                }
+                else {
+                    player2UI.life1.SetActive(playerToKill.GetComponent<Player>().playerScore >= 1);
+                    player2UI.life2.SetActive(playerToKill.GetComponent<Player>().playerScore >= 2);
+                    player2UI.life3.SetActive(playerToKill.GetComponent<Player>().playerScore >= 3);
+                    player2UI.life4.SetActive(playerToKill.GetComponent<Player>().playerScore >= 4);
                 }
                 break;
             default:
@@ -182,7 +208,7 @@ public class GameManager : MonoBehaviour {
             //In STOCK, playerScore is stock count and playerDamage is percent
             foreach (GameObject player in players)
             {
-                player.GetComponent<Player>().playerScore = 3; //3 Stock
+                player.GetComponent<Player>().playerScore = 4; //4 Stock
                 player.GetComponent<Player>().playerDamage = 0; //0% initial
             }
         }
@@ -192,7 +218,7 @@ public class GameManager : MonoBehaviour {
             //In STAMINA, playerScore is stock and playerDamage is health
             foreach (GameObject player in players)
             {
-                player.GetComponent<Player>().playerScore = 3; //3 Stock
+                player.GetComponent<Player>().playerScore = 4; //4 Stock
                 player.GetComponent<Player>().playerDamage = 100; //100 HP initial
             }
         }

@@ -127,7 +127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &86465155
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8094,6 +8094,7 @@ GameObject:
   - component: {fileID: 588788605}
   - component: {fileID: 588788604}
   - component: {fileID: 588788603}
+  - component: {fileID: 588788607}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -8182,6 +8183,35 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &588788607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 588788602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f123012094c47334e887da68fa9f9d56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1UI:
+    life1: {fileID: 1992179350}
+    life2: {fileID: 2086678992}
+    life3: {fileID: 697708363}
+    life4: {fileID: 1082179326}
+    playerName: {fileID: 864819699}
+    playerDamage: {fileID: 737711294}
+    playerNameShadow: {fileID: 1379277973}
+    playerDamageShadow: {fileID: 1645307747}
+  player2UI:
+    life1: {fileID: 109968963}
+    life2: {fileID: 834393114}
+    life3: {fileID: 578600198}
+    life4: {fileID: 1758511753}
+    playerName: {fileID: 1755820179}
+    playerDamage: {fileID: 796177424}
+    playerNameShadow: {fileID: 1725016304}
+    playerDamageShadow: {fileID: 694193199}
 --- !u!1 &693344983
 GameObject:
   m_ObjectHideFlags: 0
@@ -8196,7 +8226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &693344984
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8387,7 +8417,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &723051773
 RectTransform:
   m_ObjectHideFlags: 0

@@ -144,7 +144,7 @@ public class CameraMovement : MonoBehaviour {
     }
 
     //Grabs the transforms of the player's and puts it in a list
-    private void SetPlayerList()
+    public void SetPlayerList()
     {
         playerTransforms = new List<Transform>();
         for (int i = 0; i < gm.players.Length; i++)
