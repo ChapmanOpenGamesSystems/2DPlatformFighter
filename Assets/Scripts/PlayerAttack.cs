@@ -68,6 +68,8 @@ public class PlayerAttack : MonoBehaviour {
     private bool verticalPressed;
     private bool verticalDown;
 
+    private bool throwingPlayer;
+
     // Use this for initialization
     void Start() {
         p = GetComponent<Player>();
@@ -77,6 +79,7 @@ public class PlayerAttack : MonoBehaviour {
         horizontalDown = false;
         verticalPressed = false;
         verticalDown = false;
+        throwingPlayer = false;
     }
 
     // Update is called once per frame
@@ -85,7 +88,6 @@ public class PlayerAttack : MonoBehaviour {
         if(Input.GetAxis("Vertical" + playerNum) != 0 && !verticalDown) {
             verticalPressed = true;
             verticalDown = true;
-            Debug.Log("VERTICAL PRESSED!");
         } else if (verticalDown) {
             verticalPressed = false;
         }
@@ -97,7 +99,6 @@ public class PlayerAttack : MonoBehaviour {
         if (Input.GetAxis("Horizontal" + playerNum) != 0 && !horizontalDown) {
             horizontalPressed = true;
             horizontalDown = true;
-            Debug.Log("HORIZONTAL PRESSED!");
         } else if (horizontalDown) {
             horizontalPressed = false;
         }
@@ -118,8 +119,9 @@ public class PlayerAttack : MonoBehaviour {
                 }
             }
 
-            if(grabbedPlayer != null)
+            if(grabbedPlayer != null && !throwingPlayer)
             {
+                Debug.Log("GRABBED PLAYER FRAME!");
                 if (verticalPressed)
                 {
                     if (Input.GetAxisRaw("Vertical" + playerNum) > 0)
@@ -136,6 +138,7 @@ public class PlayerAttack : MonoBehaviour {
                         grabbedPlayer.GetComponent<Player>().PlayerStagger(DownThrow);
                         StartCoroutine(ReleasePlayer(grabbedPlayer));
                     }
+                    throwingPlayer = true;
                 }
                 else if (horizontalPressed)
                 {
@@ -165,6 +168,7 @@ public class PlayerAttack : MonoBehaviour {
                         grabbedPlayer.GetComponent<Player>().PlayerStagger(tempThrow);
                         StartCoroutine(ReleasePlayer(grabbedPlayer));
                     }
+                    throwingPlayer = true;
                 }
 
             }
@@ -374,6 +378,8 @@ public class PlayerAttack : MonoBehaviour {
         grabbedPlayer.transform.parent = null;
         grabbedPlayer.GetComponent<Rigidbody2D>().simulated = true;
         anim.SetTrigger("Grab Release");
+        yield return new WaitForSeconds(2.0f); //Adding in a waitForSeconds because throwingPlayer would otherwise turn true early
+        throwingPlayer = false;
         //No need to allow grabbed player to escape since they'll go directly to stagger
     }
 
