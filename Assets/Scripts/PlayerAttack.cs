@@ -63,17 +63,50 @@ public class PlayerAttack : MonoBehaviour {
 
     private Animator anim;
 
+    private bool horizontalPressed;
+    private bool horizontalDown;
+    private bool verticalPressed;
+    private bool verticalDown;
 
     // Use this for initialization
     void Start() {
         p = GetComponent<Player>();
         pmove = GetComponent<PlayerMovement>();
         anim = GetComponent<Animator>();
+        horizontalPressed = false;
+        horizontalDown = false;
+        verticalPressed = false;
+        verticalDown = false;
     }
 
     // Update is called once per frame
     void Update() {
-        if(anim.GetCurrentAnimatorStateInfo(0).IsName("Grabbing"))
+
+        if(Input.GetAxis("Vertical" + playerNum) != 0 && !verticalDown) {
+            verticalPressed = true;
+            verticalDown = true;
+            Debug.Log("VERTICAL PRESSED!");
+        } else if (verticalDown) {
+            verticalPressed = false;
+        }
+
+        if(Input.GetAxis("Vertical" + playerNum)== 0) {
+            verticalDown = false;
+        }
+
+        if (Input.GetAxis("Horizontal" + playerNum) != 0 && !horizontalDown) {
+            horizontalPressed = true;
+            horizontalDown = true;
+            Debug.Log("HORIZONTAL PRESSED!");
+        } else if (horizontalDown) {
+            horizontalPressed = false;
+        }
+
+        if (Input.GetAxis("Horizontal" + playerNum) == 0) {
+            horizontalDown = false;
+        }
+
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Grabbing"))
         {
             Transform[] transformList = this.GetComponentsInChildren<Transform>();
             GameObject grabbedPlayer = null;
@@ -87,7 +120,7 @@ public class PlayerAttack : MonoBehaviour {
 
             if(grabbedPlayer != null)
             {
-                if (Input.GetButtonDown("Vertical" + playerNum))
+                if (verticalPressed)
                 {
                     if (Input.GetAxisRaw("Vertical" + playerNum) > 0)
                     {
@@ -104,7 +137,7 @@ public class PlayerAttack : MonoBehaviour {
                         StartCoroutine(ReleasePlayer(grabbedPlayer));
                     }
                 }
-                if (Input.GetButtonDown("Horizontal" + playerNum))
+                else if (horizontalPressed)
                 {
                     Attack tempThrow = new Attack(); //Using tempThrow as deep copy to change knockback direction without affecting original
                     if (Input.GetAxisRaw("Horizontal" + playerNum) > 0 && p.facingRight || Input.GetAxisRaw("Horizontal" + playerNum) < 0 && !p.facingRight)
