@@ -89,6 +89,13 @@ public class GameManager : MonoBehaviour {
                 else
                 {
                     PlayerRespawn(playerNum, playerToKill.GetComponent<Player>().playerScore);
+                    if(playerNum == 1) {
+                        player1UI.playerDamage.text = "0";
+                        player1UI.playerDamageShadow.text = "0";
+                    } else {
+                        player2UI.playerDamage.text = "0";
+                        player2UI.playerDamageShadow.text = "0";
+                    }
                 }
                 if(playerNum == 1) { //Simple if/else to account for playerNum being either 1 or 2;
                     player1UI.life1.SetActive(playerToKill.GetComponent<Player>().playerScore >= 1);
@@ -129,6 +136,13 @@ public class GameManager : MonoBehaviour {
                 else
                 {
                     PlayerRespawn(playerNum, playerToKill.GetComponent<Player>().playerScore);
+                    if(playerNum == 1) {
+                        player1UI.playerDamage.text = "100";
+                        player1UI.playerDamageShadow.text = "100";
+                    } else {
+                        player2UI.playerDamage.text = "100";
+                        player2UI.playerDamageShadow.text = "100";
+                    }
                 }
                 if (playerNum == 1) { //Simple if/else to account for playerNum being either 1 or 2;
                     player1UI.life1.SetActive(playerToKill.GetComponent<Player>().playerScore >= 1);
@@ -186,6 +200,14 @@ public class GameManager : MonoBehaviour {
         if(gamemode == Gamemode.STAMINA)
         {
             playerToDamage.GetComponent<Player>().playerDamage -= damageValue;
+            if (playerNum == 1) {
+                player1UI.playerDamage.text = playerToDamage.GetComponent<Player>().playerDamage.ToString();
+                player1UI.playerDamageShadow.text = playerToDamage.GetComponent<Player>().playerDamage.ToString();
+            }
+            else {
+                player2UI.playerDamage.text = playerToDamage.GetComponent<Player>().playerDamage.ToString();
+                player2UI.playerDamageShadow.text = playerToDamage.GetComponent<Player>().playerDamage.ToString();
+            }
             if (playerToDamage.GetComponent<Player>().playerDamage <= 0)
             {
                 PlayerKill(playerNum);
@@ -194,6 +216,14 @@ public class GameManager : MonoBehaviour {
         else
         {
             playerToDamage.GetComponent<Player>().playerDamage += damageValue;
+            if (playerNum == 1) {
+                player1UI.playerDamage.text = playerToDamage.GetComponent<Player>().playerDamage.ToString();
+                player1UI.playerDamageShadow.text = playerToDamage.GetComponent<Player>().playerDamage.ToString();
+            }
+            else {
+                player2UI.playerDamage.text = playerToDamage.GetComponent<Player>().playerDamage.ToString();
+                player2UI.playerDamageShadow.text = playerToDamage.GetComponent<Player>().playerDamage.ToString();
+            }
         }
     }
 
@@ -211,6 +241,10 @@ public class GameManager : MonoBehaviour {
                 player.GetComponent<Player>().playerScore = 4; //4 Stock
                 player.GetComponent<Player>().playerDamage = 0; //0% initial
             }
+            player1UI.playerDamage.text = "0";
+            player1UI.playerDamageShadow.text = "0";
+            player2UI.playerDamage.text = "0";
+            player2UI.playerDamageShadow.text = "0";
         }
         else if (gamemode.Equals("STAMINA"))
         {
@@ -221,6 +255,10 @@ public class GameManager : MonoBehaviour {
                 player.GetComponent<Player>().playerScore = 4; //4 Stock
                 player.GetComponent<Player>().playerDamage = 100; //100 HP initial
             }
+            player1UI.playerDamage.text = "100";
+            player1UI.playerDamageShadow.text = "100";
+            player2UI.playerDamage.text = "100";
+            player2UI.playerDamageShadow.text = "100";
         }
         else if (gamemode.Equals("TIME"))
         {
@@ -231,6 +269,10 @@ public class GameManager : MonoBehaviour {
                 player.GetComponent<Player>().playerScore = 0; //0 Score
                 player.GetComponent<Player>().playerDamage = 0; //0% initial
             }
+            player1UI.playerDamage.text = "0";
+            player1UI.playerDamageShadow.text = "0";
+            player2UI.playerDamage.text = "0";
+            player2UI.playerDamageShadow.text = "0";
         }
     }
 
